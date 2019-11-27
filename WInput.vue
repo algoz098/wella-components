@@ -2,25 +2,30 @@
   <q-input
     :id="name"
     :name="name"
-    bg-color="white"
+    :bg-color="bgColor"
     v-model="internalValue"
     @blur="$emit('blur')"
     @keydown="$clearError(name, errors)"
     :error="$isInputValid(name, errors)"
     :error-message="$showInputError(name, errors)"
     v-bind="$attrs"
-  />
+  >
+    <template v-slot:prepend v-if="!!$slots['prepend']">
+      <slot name="prepend" />
+    </template>
+  </q-input>
 </template>
 <script>
 // Basic input for forms
 // @group widgets
 export default {
-  name: 'input-custom',
+  name: 'w-input',
   props: {
     // Used to search the error and input ID
     'name': { type: String, required: true },
     'value': { type: [String, Number] },
-    'errors': { type: [Object, Array], required: true }
+    'errors': { type: [Object, Array], required: true },
+    'bg-color': { value: 'white' }
   },
   computed: {
     internalValue: {
